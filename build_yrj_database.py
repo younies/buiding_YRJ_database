@@ -14,7 +14,7 @@ import re
 
 path_to_the_program = "/export1/project/hondius/newKrakenResearch/"
 path_to_the_place_of_the_database = "/export1/project/hondius/newKrakenResearch/databases/"
-name_of_genomes_database = "genomesDatabase"
+name_of_genomes_database = "genomesDatabaseNewUIDs"
 path_for_converting_yjr = "/export/project/hondius/newProject/NewTaxonomer/convert_kmerFasta_to_yrj.out"
 kmer_databaseName = "" #setted in the program
 kmer = -1 #will be set later
@@ -78,7 +78,7 @@ def osRunForName(name):
 	name_in_genomesDB = path_to_the_program + name_of_genomes_database + "/" + name
 	name_in_kmerDB = path_to_the_place_of_the_database + kmer_databaseName + "/" + name[:-3] + '.jf'
 
-	commadList = ["jellyfish" , "count", '-m' , str(kmer) , '-s' , '100M' , '-C' , '-o']
+	commadList = ["jellyfish" , "count", '-m'  , str(kmer) , '-s'  , '100M' , '-C' , '-t' , '12' , '-o']
 	commadList.append(name_in_kmerDB)
 	commadList.append(name_in_genomesDB)
 	subProRunning(commadList , "for the uid: " + name)
@@ -120,7 +120,7 @@ if len(sys.argv) < 2:
 	exit()
 else:
 	kmer = int(sys.argv[1])
-	kmer_databaseName = 'kmerDatabase' + str(kmer)
+	kmer_databaseName = 'kmerDatabase_new_' + str(kmer)
 
 
 
@@ -163,7 +163,7 @@ print full_names[0]
 
 all_database_name = path_to_the_place_of_the_database + kmer_databaseName + '/all.jf'
 
-building_all = subprocess.Popen(['jellyfish', 'count' , '-m' , str(kmer) , '-s' , '10000M' , '-C' , '-o' , all_database_name ] + full_names, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+building_all = subprocess.Popen(['jellyfish', 'count' , '-m' , str(kmer) , '-s' , '10000M' , '-C' , '-t' , '12' , '-o' , all_database_name ] + full_names, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 out , err = building_all.communicate()
 if not err:
